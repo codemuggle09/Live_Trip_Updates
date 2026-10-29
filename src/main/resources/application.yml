@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: live-trip-updates
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/live_trip_updates}
+    username: ${SPRING_DATASOURCE_USERNAME:live_trip_updates}
+    password: ${SPRING_DATASOURCE_PASSWORD:live_trip_updates}
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+  flyway:
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+app:
+  security:
+    dev-jwt-secret: ${JWT_DEV_SECRET:local-development-secret-key-32-bytes}
+  websocket:
+    allowed-origin-patterns: ${WEBSOCKET_ALLOWED_ORIGIN_PATTERNS:http://localhost:*}
+    outbound-queue-capacity: ${WEBSOCKET_OUTBOUND_QUEUE_CAPACITY:256}
+  events:
+    pubsub-channel: ${EVENT_PUBSUB_CHANNEL:trip-events}
+    stream-max-length: ${EVENT_STREAM_MAX_LENGTH:10000}
+    idempotency-ttl-seconds: ${EVENT_IDEMPOTENCY_TTL_SECONDS:86400}
+    replay-max-batch-size: ${EVENT_REPLAY_MAX_BATCH_SIZE:500}
+    redis-listener-enabled: ${EVENT_REDIS_LISTENER_ENABLED:true}
+
+server:
+  port: ${SERVER_PORT:8080}
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  pattern:
+    level: "%5p [%X{correlationId:-}]"
