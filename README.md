@@ -3,8 +3,6 @@
 Real-time trip update fan-out service built with Java 21, Spring Boot,
 PostgreSQL, Redis Streams, Redis Pub/Sub, and WebSockets.
 
-**Watch the Demo Video:** [Live Trip Updates Demo - Case Study 4](https://drive.google.com/file/d/1zyI-S8IaKI5pPPWhdwORbtZLihvOUpq0/view?usp=sharing)
-
 ## Architecture
 
 ```mermaid
